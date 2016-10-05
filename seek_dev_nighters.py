@@ -29,7 +29,7 @@ def get_midnighters():
     midnighters = []
     for i in load_attempts():
         midnighters += list(filter(is_midnighter, i))
-    return set(map(lambda a: a['username'], midnighters))
+    return set(map(lambda x: x['username'], midnighters))
 
 
 if __name__ == '__main__':
