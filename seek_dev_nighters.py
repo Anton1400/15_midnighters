@@ -16,20 +16,20 @@ def load_attempts():
     req = requests.get(API_URL)
     if req.status_code == 200:
         page_count = req.json()['number_of_pages']
-        for page in range(page_count):
-            yield get_data(page + 1)
+        yield from req.json()['records']
+        for page in range(1, page_count):
+            yield from get_data(page + 1)
 
 
 def is_midnighter(user):
+    if user['timestamp'] is None:
+        return False
     user_datetime = datetime.fromtimestamp(user['timestamp'])
     return(time(5, 0, 0) > user_datetime.time() > time(0, 0, 0))
 
 
 def get_midnighters():
-    midnighters = []
-    for i in load_attempts():
-        midnighters += list(filter(is_midnighter, i))
-    return set(map(lambda x: x['username'], midnighters))
+    return set([user['username'] for user in load_attempts() if is_midnighter(user)])
 
 
 if __name__ == '__main__':
