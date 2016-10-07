@@ -28,10 +28,7 @@ def is_midnighter(user):
     return(time(5, 0, 0) > user_datetime.time() > time(0, 0, 0))
 
 
-def get_midnighters():
-    return set([user['username'] for user in load_attempts() if is_midnighter(user)])
-
-
 if __name__ == '__main__':
+    midnighters = set([user['username'] for user in load_attempts() if is_midnighter(user)])
     for midnighter in get_midnighters():
         print(midnighter)
