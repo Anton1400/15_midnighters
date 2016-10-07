@@ -30,5 +30,5 @@ def is_midnighter(user):
 
 if __name__ == '__main__':
     midnighters = set([user['username'] for user in load_attempts() if is_midnighter(user)])
-    for midnighter in get_midnighters():
+    for midnighter in midnighters:
         print(midnighter)
